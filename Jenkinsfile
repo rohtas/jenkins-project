@@ -3,9 +3,9 @@ pipeline {
 
     stages {
 
-        stage('Build Docker Image') {
+        stage('Build Image') {
             steps {
-                sh 'docker build -t jenkins-lab:latest .'
+                sh 'docker build -t website:latest .'
             }
         }
 
@@ -17,13 +17,7 @@ pipeline {
 
         stage('Deploy Website') {
             steps {
-                sh 'docker run -d --name website -p 8082:80 jenkins-lab:latest'
-            }
-        }
-
-        stage('Verification') {
-            steps {
-                sh 'docker ps'
+                sh 'docker run -d --name website -p 8082:80 website:latest'
             }
         }
     }

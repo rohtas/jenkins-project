@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        sonarQube 'SonarScanner'
-    }
-
     stages {
 
         stage('SonarQube Analysis') {
@@ -21,9 +17,14 @@ pipeline {
             }
         }
 
-        stage('Deploy Website') {
+        stage('Remove Old Container') {
             steps {
                 sh 'docker rm -f website || true'
+            }
+        }
+
+        stage('Deploy Website') {
+            steps {
                 sh 'docker run -d --name website -p 8082:80 website:latest'
             }
         }
